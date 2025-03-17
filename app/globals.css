@@ -1,42 +1,131 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: "RousseauDeco";
+  src: url("/fonts/RousseauDeco.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@font-face {
+  font-family: "Heathergreen";
+  src: url("/fonts/Heathergreen.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #111;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #111;
+  padding: 10px 30px;
+}
+
+.nav-links {
+  font-family: "RousseauDeco";
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: red;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: transform 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: white;
+  transition: 0.3s;
+  transform: translateY(-3px);
+}
+
+.signature-wrapper {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.signature-img {
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.signature-img:hover {
+  transform: translateY(-3px);
+}
+
+.skills-section {
+  display: flex;
+  flex-direction: row;
+  padding: 50px;
+  align-items: center;
+  gap: 40px;
+}
+
+.section-title {
+  font-family: "Heathergreen";
+  font-size: 320px;
+  color: red;
+}
+
+.skills-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.marquee-container {
+  overflow: hidden;
+  border: 1px solid red;
+  border-radius: 30px;
+  padding: 10px 20px;
+  display: inline-block;
+  position: relative;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 10px;
+}
+
+.marquee-text {
+  font-family: "RousseauDeco";
+  font-size: 1.5rem;
+  color: red;
+}
+
+.marquee-icon {
+  color: red;
+  font-size: 1.5rem;
+}
+
+.marquee-container:hover .marquee-content {
+  animation: scroll-text 2s linear infinite;
+  animation-play-state: running;
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+@media (max-width: 768px) {
+  .signature-wrapper {
+    width: 100px;
+    height: 100px;
   }
 }
