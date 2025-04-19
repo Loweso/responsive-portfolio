@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Head from "next/head";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
@@ -122,6 +123,12 @@ const HomePage = () => {
 
   return (
     <div>
+      <Head>
+        <title>Louise Fermin Deiparine</title>
+        <meta name="description" content="This is my awesome portfolio!" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <header className="navbar">
         <nav className="nav-links">
           <Link href="#hero">HERO</Link>
