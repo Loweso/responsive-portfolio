@@ -15,7 +15,8 @@
 @font-face {
   font-family: "Kessel 205 W00 Bold";
   src: url("https://db.onlinewebfonts.com/t/2b6d84ae2684792084b4f6960404eee5.eot");
-  src: url("https://db.onlinewebfonts.com/t/2b6d84ae2684792084b4f6960404eee5.eot?#iefix")
+  src:
+    url("https://db.onlinewebfonts.com/t/2b6d84ae2684792084b4f6960404eee5.eot?#iefix")
       format("embedded-opentype"),
     url("https://db.onlinewebfonts.com/t/2b6d84ae2684792084b4f6960404eee5.woff2")
       format("woff2"),
@@ -28,6 +29,8 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   padding: 0;
   background-color: #111;
@@ -220,15 +223,6 @@ body {
   }
   100% {
     transform: translateX(-50%);
-  }
-}
-
-@keyframes scroll-hero-right {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(50%);
   }
 }
 
@@ -622,6 +616,85 @@ body {
   color: white;
 }
 
+.recaptcha-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 1rem 0;
+}
+
+.recaptcha-container > div {
+  transform: scale(0.85);
+  transform-origin: center;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.success-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "RousseauDeco";
+  font-size: 1.5rem;
+  background-color: red;
+  color: #111;
+  text-align: center;
+  z-index: 20;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  min-height: 200px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-message-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.success-message-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
 .footer {
   background-color: #111;
   padding: 20px;
@@ -860,5 +933,21 @@ body {
   .marquee-hero-left,
   .marquee-hero-right {
     animation-duration: 15s;
+  }
+
+  .success-message {
+    width: 50%;
+    max-width: 90%;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    min-height: 180px;
+  }
+
+  .success-message-button {
+    width: 28px;
+    height: 28px;
+    font-size: 1.2rem;
+    top: 8px;
+    right: 8px;
   }
 }

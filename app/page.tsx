@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Head from "next/head";
+import ReCAPTCHA from "react-google-recaptcha";
+import MessageSuccessModal from "@/components/MessageSuccessModal";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
@@ -103,7 +104,10 @@ const projects = [
 ];
 
 const HomePage = () => {
+  const captchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
   const [isOpen, setIsOpen] = useState(false);
+  const [status, setStatus] = useState("idle"); // 'idle  ' | 'sending' | 'sent' -> status of Contact Form Submit
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   useEffect(() => {
     if (isOpen) {
@@ -121,14 +125,63 @@ const HomePage = () => {
     setIsOpen(false);
   };
 
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+
+  const handleCaptchaChange = (value: string | null) => {
+    if (value) {
+      setCaptchaVerified(true);
+    } else {
+      setCaptchaVerified(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("sending");
+
+    if (!captchaVerified) {
+      alert("Please verify the CAPTCHA.");
+      setStatus("idle");
+      return;
+    }
+
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Server Error:", text);
+        throw new Error("Server returned an error");
+      }
+
+      const data = await res.json();
+
+      if (data.success) {
+        setStatus("sent");
+        setTimeout(() => setStatus("idle"), 3000);
+        setIsModalOpen(true);
+      } else {
+        setStatus("idle");
+      }
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+      setStatus("idle");
+    }
+  };
+
   return (
     <div>
-      <Head>
-        <title>Louise Fermin Deiparine</title>
-        <meta name="description" content="This is my awesome portfolio!" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <header className="navbar">
         <nav className="nav-links">
           <Link href="#hero">HERO</Link>
@@ -401,12 +454,18 @@ const HomePage = () => {
             </div>
           </div>
           <div className="contact-form-container">
-            <form className="contact-form">
+            <form className="contact-form" onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="name" className="form-label">
                   Name<span className="required">*</span>
                 </label>
-                <input type="text" id="name" className="form-input" required />
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  className="form-input"
+                  required
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="email" className="form-label">
@@ -415,6 +474,7 @@ const HomePage = () => {
                 <input
                   type="email"
                   id="email"
+                  name="email"
                   className="form-input"
                   required
                 />
@@ -425,21 +485,30 @@ const HomePage = () => {
                 </label>
                 <textarea
                   id="project-info"
+                  name="message"
                   className="form-textarea"
                   rows={4}
                   required
                 ></textarea>
               </div>
+              <div className="recaptcha-container">
+                <ReCAPTCHA
+                  sitekey={captchaSiteKey}
+                  onChange={handleCaptchaChange}
+                />
+              </div>
               <button
                 type="submit"
                 className="submit-button"
-                onClick={() =>
-                  alert(
-                    "Thanks for reaching out! Sad to say, the contact section is still underway! I'll get back to you as soon as possible."
-                  )
-                }
+                disabled={status === "sending"}
               >
-                Send Inquiry
+                {status === "sending" ? (
+                  <span className="spinner" />
+                ) : status === "sent" ? (
+                  "Message Sent!"
+                ) : (
+                  "Send Message"
+                )}
               </button>
             </form>
           </div>
@@ -469,6 +538,11 @@ const HomePage = () => {
           </div>
         </div>
       </footer>
+
+      <MessageSuccessModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };
