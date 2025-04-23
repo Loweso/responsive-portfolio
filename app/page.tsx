@@ -464,7 +464,7 @@ const HomePage = () => {
                   id="name"
                   name="name"
                   className="form-input"
-                  autoComplete="Name"
+                  autoComplete="off"
                   required
                 />
               </div>
@@ -477,7 +477,7 @@ const HomePage = () => {
                   id="email"
                   name="email"
                   className="form-input"
-                  autoComplete="E-mail"
+                  autoComplete="off"
                   required
                 />
               </div>
@@ -490,7 +490,7 @@ const HomePage = () => {
                   name="message"
                   className="form-textarea"
                   rows={4}
-                  autoComplete="What do you want to talk about?"
+                  autoComplete="off"
                   required
                 ></textarea>
               </div>
