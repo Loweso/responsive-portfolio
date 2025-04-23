@@ -28,7 +28,7 @@ const skillsMarquee1 = [
 const skillsMarquee2 = [
   { src: "/assets/skills-logos/react.png", alt: "React", name: "React" },
   { src: "/assets/skills-logos/nextJS.png", alt: "Next.js", name: "Next.js" },
-  { src: "/assets/skills-logos/vue.png", alt: "Vue", name: "Vue" },
+  { src: "/assets/skills-logos/vue-icon.png", alt: "Vue", name: "Vue" },
   {
     src: "/assets/skills-logos/react-native-1.svg",
     alt: "React Native",
@@ -464,6 +464,7 @@ const HomePage = () => {
                   id="name"
                   name="name"
                   className="form-input"
+                  autoComplete="Name"
                   required
                 />
               </div>
@@ -476,6 +477,7 @@ const HomePage = () => {
                   id="email"
                   name="email"
                   className="form-input"
+                  autoComplete="E-mail"
                   required
                 />
               </div>
@@ -488,6 +490,7 @@ const HomePage = () => {
                   name="message"
                   className="form-textarea"
                   rows={4}
+                  autoComplete="What do you want to talk about?"
                   required
                 ></textarea>
               </div>
