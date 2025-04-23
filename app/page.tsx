@@ -107,7 +107,7 @@ const HomePage = () => {
   const captchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
   const [isOpen, setIsOpen] = useState(false);
   const [status, setStatus] = useState("idle"); // 'idle  ' | 'sending' | 'sent' -> status of Contact Form Submit
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
